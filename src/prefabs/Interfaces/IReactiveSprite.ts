@@ -1,0 +1,3 @@
+interface IReactiveSprite {
+    resize(): void
+}
