@@ -57,8 +57,6 @@ export default class Game extends Container {
     this._cage = new Cage();
     this._panel = new Panel();
     this._background = new Background(); 
-
-    this.addChild();
     
     let cage = this._cage.getChildAt(0);
     this._bars = new Bars(3, cage);
