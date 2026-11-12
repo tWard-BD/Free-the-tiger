@@ -1,16 +1,12 @@
 import { Container, Sprite, Texture } from "pixi.js";
 
-export default class Tiger extends Container implements IReactiveSprite {
+export default class Tiger extends Container {
     private _tigerTextureName: string = "tiger";
     
     constructor() {
         super();
 
         this.renderSprite();
-    }
-
-    resize(): void {
-
     }
 
     private renderSprite(): void {

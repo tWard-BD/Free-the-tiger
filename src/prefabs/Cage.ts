@@ -1,16 +1,12 @@
 import { Container, Sprite, Texture } from "pixi.js";
 
-export default class Cage extends Container<Sprite> implements IReactiveSprite {
+export default class Cage extends Container<Sprite> {
     private _cageTextureName: string = "cage";
 
     constructor() {
         super();
 
         this.renderSprite();
-    }
-
-    resize(): void {
-
     }
 
     private renderSprite(): void {

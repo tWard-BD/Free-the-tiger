@@ -1,16 +1,12 @@
 import { Container, Sprite, Texture } from "pixi.js";
 
-export default class Panel extends Container implements IReactiveSprite { 
+export default class Panel extends Container { 
     private _panelTextureName: string = "plate";
 
     constructor() { 
         super();
 
         this.renderSprite();
-    }
-
-    resize(): void {
-
     }
 
     private renderSprite(): void {

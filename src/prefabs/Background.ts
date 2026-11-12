@@ -1,16 +1,12 @@
 import { Container, Sprite, Texture } from "pixi.js";
 
-export default class Background extends Container implements IReactiveSprite {
+export default class Background extends Container {
     private _backgroundTextureName: string = "background";
 
     constructor() {
         super();
 
         this.renderSprite();
-    }
-
-    resize(): void {
-        
     }
 
     private renderSprite(): void {

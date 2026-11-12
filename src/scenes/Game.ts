@@ -54,7 +54,7 @@ export default class Game extends Container {
     this.removeChildren();
 
     this.setupDependencies();
-
+    
     // draw background
     this.addChild(this._background);
 

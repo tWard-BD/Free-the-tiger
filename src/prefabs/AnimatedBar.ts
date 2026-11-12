@@ -28,14 +28,6 @@ export class AnimatedBar {
     bar.on('pointerdown', () => onClick(this));
   }
 
-    private animateSlideToRightBar(bar: Sprite, secondBar: Sprite) {
-        bar.eventMode = 'static';
-        bar.on('pointerdown', () => {
-            
-            
-        });
-    }
-
   open(): void {
     this.isClicked = true;
 
@@ -45,7 +37,7 @@ export class AnimatedBar {
 
   close(): void {
     this.isClicked = false;
-    //gsap.killTweensOf([this.bar, this.shadow]);
+    
     gsap.to(this._bar, { x: this._startPositionX, duration: 0.4 });
     gsap.to(this._shadowBar, { x: this._startPositionX, duration: 0.4 });
   }

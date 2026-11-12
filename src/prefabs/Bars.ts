@@ -1,4 +1,3 @@
-import gsap from "gsap";
 import { Container, Sprite, Texture, Text } from "pixi.js";
 
 export type BarDto = {
@@ -7,22 +6,16 @@ export type BarDto = {
     destinationPositionX: number
 }
 
-export class Bars extends Container implements IReactiveSprite {
+export class Bars extends Container {
     private _barTextureName: string = "bar";
     private _barShadowTextureName: string = "barShadow";
-    private _cypher: number[] = [];
 
     barDtos: BarDto[] = [];
 
     constructor(pairsOfBars: number, cage: Sprite) {
         super();
 
-        this.fillCypher(pairsOfBars * 2);
         this.loadNumberOfBars(pairsOfBars, cage);
-    }
-
-    resize(): void {
-        
     }
 
     private loadNumberOfBars(barPairsAmount: number, cageSprite: Sprite): void {
@@ -65,8 +58,7 @@ export class Bars extends Container implements IReactiveSprite {
                 this.setBarSpriteOposite(barSpriteOposite, barScale, 890, barPositionY);
                 this.setBarSpriteOposite(barShadowSpriteOposite, barScale, 890, shadowBarPositionY);
                 barOppositeNumber.position.set(890, barPositionY - 10);
-            }
-            else {
+            } else {
                 let barPositionY = lastBarPositionOnY + barGap;
                 let shadowBarPositionY = lastBarPositionOnY + barGap + 10;
 
@@ -97,12 +89,6 @@ export class Bars extends Container implements IReactiveSprite {
         };
         
         this.barDtos.push(barDto);
-    }
-
-    private fillCypher(arrayLength: number) {
-        for (let i = 1; i <= arrayLength; i++) {
-          this._cypher.push(i);
-        }
     }
 
     private setBarSprite(bar: Sprite, scale: number, x: number, y: number): void {
