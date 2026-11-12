@@ -17,9 +17,9 @@ export default class Panel extends Container implements IReactiveSprite {
         let panelTexture = Texture.from(this._panelTextureName);
 
         let panelSprite = new Sprite(panelTexture);
-        panelSprite.scale.set(0.25);
+        panelSprite.scale.set(0.28);
         panelSprite.anchor.set(0, 0.5);
-        panelSprite.position.set(30, 345)
+        panelSprite.position.set(30, 365)
 
         this.addChild(panelSprite);
     }
