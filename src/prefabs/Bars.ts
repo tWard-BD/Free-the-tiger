@@ -1,17 +1,18 @@
+import gsap from "gsap";
 import { Container, Sprite, Texture } from "pixi.js";
 
-type Bar = {
+export type BarDto = {
     bar: Sprite,
     shadowBar: Sprite,
-    assignedNumber: number
+    destinationPositionX: number
 }
 
-export default class Bars extends Container implements IReactiveSprite {
+export class Bars extends Container implements IReactiveSprite {
     private _barTextureName: string = "bar";
     private _barShadowTextureName: string = "barShadow";
     private _cypher: number[] = [];
 
-    bars: Bar[] = [];
+    barDtos: BarDto[] = [];
 
     constructor(pairsOfBars: number, cage: Sprite) {
         super();
@@ -37,10 +38,14 @@ export default class Bars extends Container implements IReactiveSprite {
         for(let i = 0; i < barPairsAmount; i++) {
 
             let barSprite = new Sprite(barTexture);
-            let barSpriteOposite = new Sprite(barTexture);
-
             let barShadowSprite = new Sprite(barShadowTexture);
+            //this.animateSlideToLeftBar(barShadowSprite, barSprite);
+            //this.animateSlideToLeftBar(barSprite, barShadowSprite);
+
+            let barSpriteOposite = new Sprite(barTexture);
             let barShadowSpriteOposite = new Sprite(barShadowTexture);
+            //this.animateSlideToRightBar(barShadowSpriteOposite, barSpriteOposite);
+            //this.animateSlideToRightBar(barSpriteOposite, barShadowSpriteOposite);
 
             // a check only for the first iteration
             if (i <= 0) {
@@ -72,31 +77,41 @@ export default class Bars extends Container implements IReactiveSprite {
 
             this.addChild(barShadowSprite, barSprite, barShadowSpriteOposite, barSpriteOposite);
 
-            this.addAnimatedBar(barSprite, barShadowSprite);
-            this.addAnimatedBar(barSpriteOposite, barShadowSpriteOposite);
+            this.adddBarDto(barSprite, barShadowSprite, 180);
+            this.adddBarDto(barSpriteOposite, barShadowSpriteOposite, 1100);
         }
     }
     
-    private addAnimatedBar(bar: Sprite, shadowBar: Sprite) {
-        let cypherNumber = this.getCypherNumber();
-        let animatedBar: Bar = {
+    private animateSlideToLeftBar(bar: Sprite, secondBar: Sprite) {
+        bar.eventMode = 'static';
+        bar.on('pointerdown', () => {
+            gsap.to(bar, {x:180})
+            gsap.to(secondBar, {x:180})
+        });
+    }
+
+    private animateSlideToRightBar(bar: Sprite, secondBar: Sprite) {
+        bar.eventMode = 'static';
+        bar.on('pointerdown', () => {
+            gsap.to(bar, {x:1100})
+            gsap.to(secondBar, {x:1100})
+        });
+    }
+
+    private adddBarDto(bar: Sprite, shadowBar: Sprite, destinationPositionX: number) {
+        let barDto: BarDto = {
             bar: bar,
             shadowBar: shadowBar,
-            assignedNumber: cypherNumber
+            destinationPositionX: destinationPositionX
         };
         
-        this.bars.push(animatedBar);
+        this.barDtos.push(barDto);
     }
 
     private fillCypher(arrayLength: number) {
         for (let i = 1; i <= arrayLength; i++) {
           this._cypher.push(i);
         }
-    }
-
-    private getCypherNumber(): number {
-        const index = Math.floor(Math.random() * this._cypher.length);
-        return this._cypher.splice(index, 1)[0];
     }
 
     private setBarSprite(bar: Sprite, scale: number, x: number, y: number): void {
