@@ -10,12 +10,16 @@ export default class ProgressHandler {
 
     constructor(bars: BarDto[]) {
         this._cypher = new Cypher(bars.length);
-        
-        for(let i = 0; i < bars.length; i++) {
+        let pairsAmount = bars.length / 2;
+
+        for(let i = 0; i < pairsAmount; i++) {
             let bar = bars[i];
+            let barOposite = bars[i + 1];
             let animatedBar = new AnimatedBar(bar.bar, bar.shadowBar, bar.destinationPositionX, i + 1, (clicked) => this.handleClick(clicked));
+            let animatedBarOposite = new AnimatedBar(barOposite.bar, barOposite.shadowBar, barOposite.destinationPositionX, pairsAmount + i + 1, (clicked) => this.handleClick(clicked));
 
             this._bars.push(animatedBar);
+            this._bars.push(animatedBarOposite);
         }
     }
 
