@@ -1,16 +1,16 @@
 import { Container, Text } from "pixi.js";
 import { centerObjects } from "../utils/misc";
 import { SceneUtils } from "../core/App";
-import Background from "../prefabs/Background";
-import Panel from "../prefabs/Panel";
-import Tiger from "../prefabs/Tiger";
+import Background from "../prefabs/SpriteContainers/Background";
+import Panel from "../prefabs/SpriteContainers/Panel";
+import Tiger from "../prefabs/SpriteContainers/Tiger";
 import ProgressHandler from "./ProgressHandler";
-import { Bars } from "../prefabs/Bars";
-import Cage from "../prefabs/Cage";
-import VictoryText from "../prefabs/VictoryText";
+import { Bars } from "../prefabs/SpriteContainers/Bars";
+import Cage from "../prefabs/SpriteContainers/Cage";
+import VictoryText from "../prefabs/SpriteContainers/VictoryText";
 import { Cypher } from "../prefabs/Cypher";
-import RestartButton from "../prefabs/RestartButton";
-import ProgressBar from "../prefabs/ProgressBar";
+import RestartButton from "../prefabs/SpriteContainers/RestartButton";
+import ProgressBar from "../prefabs/SpriteContainers/ProgressBar";
 
 export default class Game extends Container {
   name = "Game";

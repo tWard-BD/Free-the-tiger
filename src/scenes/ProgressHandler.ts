@@ -1,7 +1,7 @@
 import { AnimatedBar } from "../prefabs/AnimatedBar";
 import { Cypher } from "../prefabs/Cypher";
-import { BarDto } from "../prefabs/Bars";
-import ProgressBar from "../prefabs/ProgressBar";
+import { BarDto } from "../prefabs/SpriteContainers/Bars";
+import ProgressBar from "../prefabs/SpriteContainers/ProgressBar";
 
 export default class ProgressHandler {
     private _cypher: Cypher;
