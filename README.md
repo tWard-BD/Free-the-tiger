@@ -38,3 +38,11 @@ Start the app (with this it should start vite)
   npm run start
 ```
 
+This will most probably generate two links. One is the local link which you will need for debugging.
+
+
+## Debugging
+
+To better debug on Visual Studio Code. Through the "Run" menu, then select "Add Configuarion". From there select a "Web app" option with your preffered browser.
+
+There will be a ".vscode" folder generated with the configuration that you have selected. There you only need to swap the local link for the one that is generated from the "npm run start" command.
