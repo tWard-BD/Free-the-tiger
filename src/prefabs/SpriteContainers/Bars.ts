@@ -1,4 +1,5 @@
 import { Container, Sprite, Texture, Text } from "pixi.js";
+import { BarConfig } from "../../utils/types/ConfigTypes";
 
 export type BarDto = {
   bar: Sprite;
@@ -7,26 +8,26 @@ export type BarDto = {
 };
 
 export class Bars extends Container {
-  private _barTextureName = "bar";
-  private _barShadowTextureName = "barShadow";
+  private _config: BarConfig;
 
   barDtos: BarDto[] = [];
 
-  constructor(pairsOfBars: number, cage: Sprite) {
+  constructor(config: BarConfig, pairsOfBars: number, cage: Sprite) {
     super();
 
+    this._config = config;
     this.loadNumberOfBars(pairsOfBars, cage);
   }
 
   private loadNumberOfBars(barPairsAmount: number, cageSprite: Sprite): void {
-    const barTexture = Texture.from(this._barTextureName);
-    const barShadowTexture = Texture.from(this._barShadowTextureName);
+    const barTexture = Texture.from(this._config.textureName);
+    const barShadowTexture = Texture.from(this._config.shadowTextureName);
 
     const barScale = cageSprite.height / barTexture.height / 14;
 
     let lastBarPositionOnY = 0;
 
-    const barGap = 85;
+    const barGap = this._config.gap;
 
     for (let i = 0; i < barPairsAmount; i++) {
       const barSprite = new Sprite(barTexture);
@@ -47,37 +48,88 @@ export class Bars extends Container {
 
       // a check only for the first iteration
       if (i <= 0) {
-        const barPositionY = 315;
-        const shadowBarPositionY = 325;
+        const barPositionY = this._config.startPositionY;
+        const shadowBarPositionY = this._config.shadowStartPositionY;
 
-        this.setBarSprite(barSprite, barScale, 390, barPositionY);
-        this.setBarSprite(barShadowSprite, barScale, 390, shadowBarPositionY);
-        barNumber.position.set(360, barPositionY - 10);
+        this.setBarSprite(
+          barSprite,
+          barScale,
+          this._config.leftBarPositionX,
+          barPositionY
+        );
 
-        this.setBarSpriteOposite(barSpriteOposite, barScale, 890, barPositionY);
+        this.setBarSprite(
+          barShadowSprite,
+          barScale,
+          this._config.leftBarPositionX,
+          shadowBarPositionY
+        );
+
+        barNumber.position.set(
+          this._config.barNumberPositionX,
+          barPositionY - this._config.barNumberYCorrection
+        );
+
+        this.setBarSpriteOposite(
+          barSpriteOposite,
+          barScale,
+          this._config.rightBarPositionX,
+          barPositionY
+        );
+
         this.setBarSpriteOposite(
           barShadowSpriteOposite,
           barScale,
-          890,
+          this._config.rightBarPositionX,
           shadowBarPositionY
         );
-        barOppositeNumber.position.set(890, barPositionY - 10);
+
+        barOppositeNumber.position.set(
+          this._config.rightBarPositionX,
+          barPositionY - this._config.barNumberYCorrection
+        );
       } else {
         const barPositionY = lastBarPositionOnY + barGap;
-        const shadowBarPositionY = lastBarPositionOnY + barGap + 10;
+        const shadowBarPositionY =
+          lastBarPositionOnY + barGap + this._config.shadowYCorrection;
 
-        this.setBarSprite(barSprite, barScale, 390, barPositionY);
-        this.setBarSprite(barShadowSprite, barScale, 390, shadowBarPositionY);
-        barNumber.position.set(360, barPositionY - 10);
+        this.setBarSprite(
+          barSprite,
+          barScale,
+          this._config.leftBarPositionX,
+          barPositionY
+        );
 
-        this.setBarSpriteOposite(barSpriteOposite, barScale, 890, barPositionY);
+        this.setBarSprite(
+          barShadowSprite,
+          barScale,
+          this._config.leftBarPositionX,
+          shadowBarPositionY
+        );
+
+        barNumber.position.set(
+          this._config.barNumberPositionX,
+          barPositionY - this._config.barNumberYCorrection
+        );
+
+        this.setBarSpriteOposite(
+          barSpriteOposite,
+          barScale,
+          this._config.rightBarPositionX,
+          barPositionY
+        );
+
         this.setBarSpriteOposite(
           barShadowSpriteOposite,
           barScale,
-          890,
+          this._config.rightBarPositionX,
           shadowBarPositionY
         );
-        barOppositeNumber.position.set(890, barPositionY - 10);
+
+        barOppositeNumber.position.set(
+          this._config.rightBarPositionX,
+          barPositionY - this._config.barNumberYCorrection
+        );
       }
 
       lastBarPositionOnY = barSprite.y;
@@ -89,8 +141,16 @@ export class Bars extends Container {
         barSpriteOposite
       );
 
-      this.adddBarDto(barSprite, barShadowSprite, 180);
-      this.adddBarDto(barSpriteOposite, barShadowSpriteOposite, 1100);
+      this.adddBarDto(
+        barSprite,
+        barShadowSprite,
+        this._config.leftBarWorldPositionX
+      );
+      this.adddBarDto(
+        barSpriteOposite,
+        barShadowSpriteOposite,
+        this._config.rightBarWorldPositionX
+      );
     }
   }
 

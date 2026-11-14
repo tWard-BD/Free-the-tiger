@@ -11,6 +11,7 @@ import VictoryText from "../prefabs/SpriteContainers/VictoryText";
 import { Cypher } from "../prefabs/Cypher";
 import RestartButton from "../prefabs/SpriteContainers/RestartButton";
 import ProgressBar from "../prefabs/SpriteContainers/ProgressBar";
+import config from "../config";
 
 export default class Game extends Container {
   name = "Game";
@@ -93,24 +94,27 @@ export default class Game extends Container {
   }
 
   private setupDependencies(): void {
-    const barPairsAmount = 3;
+    const barPairsAmount = config.barPairsAmount;
 
-    this._background = new Background();
+    this._background = new Background(config.sprites.background);
 
-    this._cage = new Cage();
-    this._tiger = new Tiger();
-    this._victoryText = new VictoryText();
+    this._cage = new Cage(config.sprites.cage);
+    this._tiger = new Tiger(config.sprites.tiger);
+    this._victoryText = new VictoryText(config.sprites.victoryText);
     const cage = this._cage.getChildAt(0);
-    this._bars = new Bars(barPairsAmount, cage);
+    this._bars = new Bars(config.bars, barPairsAmount, cage);
 
-    this._panel = new Panel();
+    this._panel = new Panel(config.sprites.panel);
     this._restartButton = new RestartButton(() => this.reset());
-    this._progressBar = new ProgressBar();
+    this._progressBar = new ProgressBar(config.progressBar);
 
     this._cypher = new Cypher(barPairsAmount * 2);
     this._progressHandler = new ProgressHandler(
       this._cypher,
       this._progressBar,
+      this._victoryText.getChildAt(0),
+      config.animatedBars,
+      barPairsAmount,
       this._bars.barDtos
     );
   }

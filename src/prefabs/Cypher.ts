@@ -1,43 +1,45 @@
 export class Cypher {
-  private order: number[] = [];
+  private _order: number[] = [];
+  private _count: number;
 
-  constructor(private readonly count: number) {
+  constructor(count: number) {
+    this._count = count;
     this.reset();
   }
 
   reset(): void {
-    this.order = Array.from({ length: this.count }, (_, i) => i + 1);
+    this._order = Array.from({ length: this._count }, (_, i) => i + 1);
 
-    for (let i = 0; i < this.order.length; i++) {
-      const index = Math.floor(Math.random() * this.order.length);
+    for (let i = 0; i < this._order.length; i++) {
+      const index = Math.floor(Math.random() * this._order.length);
 
-      if (i + 1 < this.order.length) {
-        const valueToSwap = this.order[i + 1];
-        const currentValue = this.order[index];
+      if (i + 1 < this._order.length) {
+        const valueToSwap = this._order[i + 1];
+        const currentValue = this._order[index];
 
-        this.order[index] = valueToSwap;
-        this.order[i + 1] = currentValue;
+        this._order[index] = valueToSwap;
+        this._order[i + 1] = currentValue;
       } else {
-        const valueToSwap = this.order[i];
-        const currentValue = this.order[index];
+        const valueToSwap = this._order[i];
+        const currentValue = this._order[index];
 
-        this.order[index] = valueToSwap;
-        this.order[i] = currentValue;
+        this._order[index] = valueToSwap;
+        this._order[i] = currentValue;
       }
     }
 
-    console.log(this.order);
+    console.log(this._order);
   }
 
   tryAdvance(progress: number, assignedNumber: number): boolean {
-    return this.order[progress] === assignedNumber;
+    return this._order[progress] === assignedNumber;
   }
 
   isComplete(progress: number): boolean {
-    return progress === this.order.length;
+    return progress === this._order.length;
   }
 
   progressRatio(progress: number): number {
-    return progress / this.order.length;
+    return progress / this._order.length;
   }
 }

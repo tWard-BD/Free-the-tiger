@@ -1,21 +1,23 @@
 import { Container, Sprite, Texture } from "pixi.js";
+import { SpriteConfig } from "../../utils/types/ConfigTypes";
 
 export default class Cage extends Container<Sprite> {
-  private _cageTextureName = "cage";
+  private _config: SpriteConfig;
 
-  constructor() {
+  constructor(config: SpriteConfig) {
     super();
 
+    this._config = config;
     this.renderSprite();
   }
 
   private renderSprite(): void {
-    const cageTexture = Texture.from(this._cageTextureName);
+    const cageTexture = Texture.from(this._config.textureName);
 
     const cageSprite = new Sprite(cageTexture);
-    cageSprite.scale.set(0.46);
-    cageSprite.anchor.set(0.5);
-    cageSprite.position.set(640, 380);
+    cageSprite.scale.set(this._config.scale);
+    cageSprite.anchor.set(this._config.anchor);
+    cageSprite.position.set(this._config.positionX, this._config.positionY);
 
     this.addChild(cageSprite);
   }

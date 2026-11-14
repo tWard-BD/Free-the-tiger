@@ -1,37 +1,55 @@
+import { Sprite } from "pixi.js";
 import { AnimatedBar } from "../prefabs/AnimatedBar";
 import { Cypher } from "../prefabs/Cypher";
 import { BarDto } from "../prefabs/SpriteContainers/Bars";
 import ProgressBar from "../prefabs/SpriteContainers/ProgressBar";
+import { AnimatedBarConfig } from "../utils/types/ConfigTypes";
 
 export default class ProgressHandler {
   private _cypher: Cypher;
   private _progressBar: ProgressBar;
+  private _victoryText: Sprite;
+  private _config: AnimatedBarConfig;
   private _bars: AnimatedBar[] = [];
 
   private _locked = false;
 
   progress = 0;
 
-  constructor(cypher: Cypher, progressBar: ProgressBar, bars: BarDto[]) {
+  constructor(
+    cypher: Cypher,
+    progressBar: ProgressBar,
+    victoryText: Sprite,
+    config: AnimatedBarConfig,
+    pairsOfBars: number,
+    bars: BarDto[]
+  ) {
     this._cypher = cypher;
     this._progressBar = progressBar;
-    const pairsAmount = bars.length / 2;
+    this._victoryText = victoryText;
+    this._config = config;
+
+    const pairsAmount = pairsOfBars;
 
     for (let i = 0; i < pairsAmount; i++) {
       const bar = bars[i * 2];
       const barOposite = bars[i * 2 + 1];
+
       const animatedBar = new AnimatedBar(
         bar.bar,
         bar.shadowBar,
         bar.destinationPositionX,
-        Math.abs(i + 1),
+        i + 1,
+        this._config,
         (clicked) => this.handleClick(clicked)
       );
+
       const animatedBarOposite = new AnimatedBar(
         barOposite.bar,
         barOposite.shadowBar,
         barOposite.destinationPositionX,
         pairsAmount + i + 1,
+        this._config,
         (clicked) => this.handleClick(clicked)
       );
 
@@ -46,12 +64,7 @@ export default class ProgressHandler {
     }
 
     if (!this._cypher.tryAdvance(this.progress, bar.assignedNumber)) {
-      this._cypher.reset();
-      this.resetOpenedBars();
-      this._progressBar.reset();
-
-      this.progress = 0;
-
+      this.finish();
       return;
     }
 
@@ -60,6 +73,7 @@ export default class ProgressHandler {
 
     if (this._cypher.isComplete(this.progress)) {
       this._locked = true;
+
       bar.open();
     } else {
       bar.open();
@@ -77,6 +91,14 @@ export default class ProgressHandler {
     for (let i = 0; i < openBars.length; i++) {
       openBars[i].close();
     }
+  }
+
+  finish(): void {
+    this._cypher.reset();
+    this.resetOpenedBars();
+    this._progressBar.reset();
+
+    this.progress = 0;
   }
 
   resetLock(): void {

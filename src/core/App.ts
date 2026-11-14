@@ -1,6 +1,7 @@
 import { Application } from "pixi.js";
 import AssetLoader from "./AssetLoader";
 import Game from "../scenes/Game";
+import config from "../config";
 
 export interface SceneUtils {
   assetLoader: AssetLoader;
@@ -42,8 +43,8 @@ export default class App extends Application {
   }
 
   private onResize() {
-    const global_width = 1280;
-    const global_height = 720;
+    const global_width = config.worldConfig.width;
+    const global_height = config.worldConfig.height;
     const scale = Math.min(
       this.screen.width / global_width,
       this.screen.height / global_height
