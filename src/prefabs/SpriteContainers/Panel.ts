@@ -1,22 +1,22 @@
 import { Container, Sprite, Texture } from "pixi.js";
 
-export default class Panel extends Container { 
-    private _panelTextureName: string = "plate";
+export default class Panel extends Container {
+  private _panelTextureName = "plate";
 
-    constructor() { 
-        super();
+  constructor() {
+    super();
 
-        this.renderSprite();
-    }
+    this.renderSprite();
+  }
 
-    private renderSprite(): void {
-        let panelTexture = Texture.from(this._panelTextureName);
+  private renderSprite(): void {
+    const panelTexture = Texture.from(this._panelTextureName);
 
-        let panelSprite = new Sprite(panelTexture);
-        panelSprite.scale.set(0.28);
-        panelSprite.anchor.set(0, 0.5);
-        panelSprite.position.set(30, 365)
+    const panelSprite = new Sprite(panelTexture);
+    panelSprite.scale.set(0.28);
+    panelSprite.anchor.set(0, 0.5);
+    panelSprite.position.set(30, 365);
 
-        this.addChild(panelSprite);
-    }
+    this.addChild(panelSprite);
+  }
 }

@@ -1,11 +1,10 @@
 import { DisplayObject, Sprite } from "pixi.js";
 
-/** 
- * center objects to the middle of the window 
+/**
+ * center objects to the middle of the window
  */
 export function centerObjects(...toCenter: DisplayObject[]) {
   const center = (obj: DisplayObject) => {
-
     if (obj instanceof Sprite) {
       obj.anchor.set(0.5);
     }

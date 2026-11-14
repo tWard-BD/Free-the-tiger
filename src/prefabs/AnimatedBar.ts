@@ -1,5 +1,5 @@
-import { Sprite } from 'pixi.js';
-import gsap from 'gsap';
+import { Sprite } from "pixi.js";
+import gsap from "gsap";
 
 export class AnimatedBar {
   private _startPositionX: number;
@@ -23,21 +23,21 @@ export class AnimatedBar {
     this.assignedNumber = assignedNumber;
     this._startPositionX = bar.x;
 
-    bar.eventMode = 'static';
-    bar.cursor = 'pointer';
-    bar.on('pointerdown', () => onClick(this));
+    bar.eventMode = "static";
+    bar.cursor = "pointer";
+    bar.on("pointerdown", () => onClick(this));
   }
 
   open(): void {
     this.isClicked = true;
 
-    gsap.to(this._bar, { x:this._destinationPositionX });
-    gsap.to(this._shadowBar, { x:this._destinationPositionX });
+    gsap.to(this._bar, { x: this._destinationPositionX });
+    gsap.to(this._shadowBar, { x: this._destinationPositionX });
   }
 
   close(): void {
     this.isClicked = false;
-    
+
     gsap.to(this._bar, { x: this._startPositionX, duration: 0.4 });
     gsap.to(this._shadowBar, { x: this._startPositionX, duration: 0.4 });
   }

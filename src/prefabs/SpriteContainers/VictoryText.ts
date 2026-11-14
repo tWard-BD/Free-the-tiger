@@ -1,27 +1,27 @@
 import { Container, Sprite, Texture } from "pixi.js";
 
 export default class VictoryText extends Container {
-    private _victoryTextTextureName: string = 'txt';
-    private _victoryTextSprite!: Sprite;
+  private _victoryTextTextureName = "txt";
+  private _victoryTextSprite!: Sprite;
 
-    constructor() {
-        super();
-    
-        this.renderSprite();
-    }
+  constructor() {
+    super();
 
-    private renderSprite() {
-        let victoryTextTexture = Texture.from(this._victoryTextTextureName);
+    this.renderSprite();
+  }
 
-        this._victoryTextSprite = new Sprite(victoryTextTexture);
-        this._victoryTextSprite.visible = false;
-        this._victoryTextSprite.scale.set(0.4);
-        this._victoryTextSprite.position.set(200, 420);
+  private renderSprite() {
+    const victoryTextTexture = Texture.from(this._victoryTextTextureName);
 
-        this.addChild(this._victoryTextSprite);
-    }
+    this._victoryTextSprite = new Sprite(victoryTextTexture);
+    this._victoryTextSprite.visible = false;
+    this._victoryTextSprite.scale.set(0.4);
+    this._victoryTextSprite.position.set(200, 420);
 
-    showText() {
-        this._victoryTextSprite.visible = true;
-    }
+    this.addChild(this._victoryTextSprite);
+  }
+
+  showText() {
+    this._victoryTextSprite.visible = true;
+  }
 }

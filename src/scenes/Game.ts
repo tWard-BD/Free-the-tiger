@@ -20,7 +20,7 @@ export default class Game extends Container {
   private _cage!: Cage;
   private _tiger!: Tiger;
   private _bars!: Bars;
-  private _victoryText!: VictoryText;  
+  private _victoryText!: VictoryText;
 
   private _panel!: Panel;
   private _restartButton!: RestartButton;
@@ -28,7 +28,7 @@ export default class Game extends Container {
 
   private _cypher!: Cypher;
   private _progressHandler!: ProgressHandler;
-  
+
   constructor(protected utils: SceneUtils) {
     super();
   }
@@ -54,20 +54,20 @@ export default class Game extends Container {
     this.removeChildren();
 
     this.setupDependencies();
-    
+
     // draw background
     this.addChild(this._background);
 
     // draw middle part
-    this.addChild(this._cage, this._tiger, this._bars, this._victoryText,);
-    
+    this.addChild(this._cage, this._tiger, this._bars, this._victoryText);
+
     // draw left part
     this.addChild(this._panel, this._restartButton, this._progressBar);
   }
 
   /**
    * Called on every ticker update
-   * @param delta 
+   * @param delta
    */
   update() {
     if (this._cypher.isComplete(this._progressHandler.progress)) {
@@ -93,21 +93,25 @@ export default class Game extends Container {
   }
 
   private setupDependencies(): void {
-    let barPairsAmount = 3;
+    const barPairsAmount = 3;
 
     this._background = new Background();
 
     this._cage = new Cage();
     this._tiger = new Tiger();
     this._victoryText = new VictoryText();
-    let cage = this._cage.getChildAt(0);
+    const cage = this._cage.getChildAt(0);
     this._bars = new Bars(barPairsAmount, cage);
 
     this._panel = new Panel();
-    this._restartButton = new RestartButton((() => this.reset()));
+    this._restartButton = new RestartButton(() => this.reset());
     this._progressBar = new ProgressBar();
 
     this._cypher = new Cypher(barPairsAmount * 2);
-    this._progressHandler = new ProgressHandler(this._cypher, this._progressBar, this._bars.barDtos);
+    this._progressHandler = new ProgressHandler(
+      this._cypher,
+      this._progressBar,
+      this._bars.barDtos
+    );
   }
 }

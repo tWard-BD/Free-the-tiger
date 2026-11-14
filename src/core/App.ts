@@ -21,8 +21,8 @@ export default class App extends Application {
     const sceneUtils = {
       assetLoader: new AssetLoader(),
     };
-    
-    this._game = new Game(sceneUtils,);
+
+    this._game = new Game(sceneUtils);
   }
 
   async begin() {
@@ -33,19 +33,22 @@ export default class App extends Application {
     this._game.start();
 
     this.onResize();
-    
-    window.addEventListener("resize", (() => this.onResize()));
+
+    window.addEventListener("resize", () => this.onResize());
 
     this.ticker.add(() => {
-      this._game.update()
+      this._game.update();
     });
   }
 
   private onResize() {
-    let global_width = 1280;
-    let global_height = 720;
-    const scale = Math.min(this.screen.width / global_width, this.screen.height / global_height);
-    
+    const global_width = 1280;
+    const global_height = 720;
+    const scale = Math.min(
+      this.screen.width / global_width,
+      this.screen.height / global_height
+    );
+
     this._game.scale.set(scale);
 
     this._game.x = (this.screen.width - global_width * scale) / 2;

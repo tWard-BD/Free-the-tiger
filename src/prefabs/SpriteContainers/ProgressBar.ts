@@ -1,5 +1,5 @@
 import { Container, Graphics } from "pixi.js";
-import gsap from 'gsap';
+import gsap from "gsap";
 
 export default class ProgressBar extends Container {
   private _fill!: Graphics;
@@ -19,19 +19,19 @@ export default class ProgressBar extends Container {
   }
 
   private renderGraphics() {
-    let width = 190;
-    let height = 100;
+    const width = 190;
+    const height = 100;
 
     const track = new Graphics()
-        .beginFill(0x333333)
-        .drawRect(0, 0, width, height);
+      .beginFill(0x333333)
+      .drawRect(0, 0, width, height);
 
     track.scale.set(0.8);
     track.position.set(100, 250);
 
     this._fill = new Graphics()
-        .beginFill(0x4caf50)
-        .drawRect(0, 0, width, height);
+      .beginFill(0x4caf50)
+      .drawRect(0, 0, width, height);
 
     this._fill.scale.set(0.8);
     this._fill.position.set(100, 250);

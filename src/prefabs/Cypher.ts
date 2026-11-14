@@ -10,16 +10,16 @@ export class Cypher {
 
     for (let i = 0; i < this.order.length; i++) {
       const index = Math.floor(Math.random() * this.order.length);
-      
+
       if (i + 1 < this.order.length) {
-        let valueToSwap = this.order[i + 1];
-        let currentValue = this.order[index];
+        const valueToSwap = this.order[i + 1];
+        const currentValue = this.order[index];
 
         this.order[index] = valueToSwap;
         this.order[i + 1] = currentValue;
       } else {
-        let valueToSwap = this.order[i];
-        let currentValue = this.order[index];
+        const valueToSwap = this.order[i];
+        const currentValue = this.order[index];
 
         this.order[index] = valueToSwap;
         this.order[i] = currentValue;

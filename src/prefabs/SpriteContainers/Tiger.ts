@@ -1,22 +1,22 @@
 import { Container, Sprite, Texture } from "pixi.js";
 
 export default class Tiger extends Container {
-    private _tigerTextureName: string = "tiger";
-    
-    constructor() {
-        super();
+  private _tigerTextureName = "tiger";
 
-        this.renderSprite();
-    }
+  constructor() {
+    super();
 
-    private renderSprite(): void {
-        let tigerTexture = Texture.from(this._tigerTextureName);
+    this.renderSprite();
+  }
 
-        let tigerSprite = new Sprite(tigerTexture);
-        tigerSprite.scale.set(0.3);
-        tigerSprite.anchor.set(0.5);
-        tigerSprite.position.set(640, 430);
+  private renderSprite(): void {
+    const tigerTexture = Texture.from(this._tigerTextureName);
 
-        this.addChild(tigerSprite);
-    }
+    const tigerSprite = new Sprite(tigerTexture);
+    tigerSprite.scale.set(0.3);
+    tigerSprite.anchor.set(0.5);
+    tigerSprite.position.set(640, 430);
+
+    this.addChild(tigerSprite);
+  }
 }
