@@ -10,14 +10,17 @@ export type BarDto = {
 
 export class Bars extends Container {
   private _config: BarConfig;
-
-  barDtos: BarDto[] = [];
+  private _barDtos: BarDto[] = [];
 
   constructor(config: BarConfig, pairsOfBars: number, cage: Sprite) {
     super();
 
     this._config = config;
     this.loadNumberOfBars(pairsOfBars, cage);
+  }
+
+  public get barDtos() {
+    return this._barDtos;
   }
 
   private loadNumberOfBars(barPairsAmount: number, cageSprite: Sprite): void {
@@ -66,14 +69,14 @@ export class Bars extends Container {
           barPositionY - this._config.barNumberYCorrection
         );
 
-        this.setBarSpriteOposite(
+        this.setBarSpriteOpposite(
           barSpriteOposite,
           barScale,
           this._config.rightBarPositionX,
           barPositionY
         );
 
-        this.setBarSpriteOposite(
+        this.setBarSpriteOpposite(
           barShadowSpriteOposite,
           barScale,
           this._config.rightBarPositionX,
@@ -108,14 +111,14 @@ export class Bars extends Container {
           barPositionY - this._config.barNumberYCorrection
         );
 
-        this.setBarSpriteOposite(
+        this.setBarSpriteOpposite(
           barSpriteOposite,
           barScale,
           this._config.rightBarPositionX,
           barPositionY
         );
 
-        this.setBarSpriteOposite(
+        this.setBarSpriteOpposite(
           barShadowSpriteOposite,
           barScale,
           this._config.rightBarPositionX,
@@ -137,12 +140,12 @@ export class Bars extends Container {
         barSpriteOposite
       );
 
-      this.adddBarDto(
+      this.addBarDto(
         barSprite,
         barShadowSprite,
         this._config.leftBarWorldPositionX
       );
-      this.adddBarDto(
+      this.addBarDto(
         barSpriteOposite,
         barShadowSpriteOposite,
         this._config.rightBarWorldPositionX
@@ -150,7 +153,7 @@ export class Bars extends Container {
     }
   }
 
-  private adddBarDto(
+  private addBarDto(
     bar: Sprite,
     shadowBar: Sprite,
     destinationPositionX: number
@@ -161,7 +164,7 @@ export class Bars extends Container {
       destinationPositionX: destinationPositionX,
     };
 
-    this.barDtos.push(barDto);
+    this._barDtos.push(barDto);
   }
 
   private setBarSprite(bar: Sprite, scale: number, x: number, y: number): void {
@@ -169,13 +172,13 @@ export class Bars extends Container {
     bar.position.set(x, y);
   }
 
-  private setBarSpriteOposite(
-    barOposite: Sprite,
+  private setBarSpriteOpposite(
+    barOpposite: Sprite,
     scale: number,
     x: number,
     y: number
   ): void {
-    this.setBarSprite(barOposite, scale, x, y);
-    barOposite.scale.x = -1;
+    this.setBarSprite(barOpposite, scale, x, y);
+    barOpposite.scale.x = -1;
   }
 }

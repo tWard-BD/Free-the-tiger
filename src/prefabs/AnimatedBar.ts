@@ -14,8 +14,8 @@ export class AnimatedBar {
   private _initialBarPositionY: number;
   private _initialShadowBarPositionY: number;
 
-  assignedNumber: number;
-  isClicked = false;
+  private _assignedNumber: number;
+  private _isClicked = false;
 
   constructor(
     barInfo: BarDto,
@@ -25,7 +25,7 @@ export class AnimatedBar {
     this._bar = barInfo.bar;
     this._shadowBar = barInfo.shadowBar;
     this._destinationPositionX = barInfo.destinationPositionX;
-    this.assignedNumber = assignedNumber;
+    this._assignedNumber = assignedNumber;
     this._startPositionX = this._bar.x;
     this._config = config.animatedBars;
 
@@ -37,12 +37,16 @@ export class AnimatedBar {
     this._bar.on("pointerdown", async () => await onClick(this));
   }
 
-  public get eventMode() {
-    return this._bar.eventMode;
+  public get assignedNumber() {
+    return this._assignedNumber;
+  }
+
+  public get isClicked() {
+    return this._isClicked;
   }
 
   async open(): Promise<void> {
-    this.isClicked = true;
+    this._isClicked = true;
 
     await gsap.to([this._bar, this._shadowBar], {
       x: this._destinationPositionX,
@@ -53,7 +57,7 @@ export class AnimatedBar {
   }
 
   async close(): Promise<void> {
-    this.isClicked = false;
+    this._isClicked = false;
     this._bar.eventMode = "static";
 
     await gsap.to([this._bar, this._shadowBar], {

@@ -4,19 +4,26 @@ import ProgressBar from "../../prefabs/SpriteContainers/ProgressBar";
 import config from "../../config";
 
 export default class LeftContainer extends Container {
+  private _panel!: Panel;
+  private _progressBar!: ProgressBar;
   constructor() {
     super();
 
     this.setupChildObjects();
   }
 
-  panel!: Panel;
-  progressBar!: ProgressBar;
+  public get panel() {
+    return this._panel;
+  }
+
+  public get progressBar() {
+    return this._progressBar;
+  }
 
   private setupChildObjects() {
-    this.panel = new Panel(config.sprites.panel);
-    this.progressBar = new ProgressBar(config.progressBar);
+    this._panel = new Panel(config.sprites.panel);
+    this._progressBar = new ProgressBar(config.progressBar);
 
-    this.addChild(this.panel, this.progressBar);
+    this.addChild(this._panel, this._progressBar);
   }
 }

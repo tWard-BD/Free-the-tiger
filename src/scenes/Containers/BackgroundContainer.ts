@@ -3,17 +3,21 @@ import Background from "../../prefabs/SpriteContainers/Background";
 import config from "../../config";
 
 export default class BackgroundContainer extends Container {
+  private _background!: Background;
+
   constructor() {
     super();
 
     this.setupChildObjects();
   }
 
-  background!: Background;
+  public get background() {
+    return this._background;
+  }
 
   private setupChildObjects() {
-    this.background = new Background(config.sprites.background);
+    this._background = new Background(config.sprites.background);
 
-    this.addChild(this.background);
+    this.addChild(this._background);
   }
 }

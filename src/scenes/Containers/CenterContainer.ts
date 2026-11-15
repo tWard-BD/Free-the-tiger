@@ -6,25 +6,41 @@ import { Bars } from "../../prefabs/SpriteContainers/Bars";
 import config from "../../config";
 
 export default class CenterContainer extends Container {
+  private _cage!: Cage;
+  private _tiger!: Tiger;
+  private _bars!: Bars;
+  private _victoryText!: VictoryText;
+
   constructor() {
     super();
 
     this.setupChildObjects();
   }
 
-  cage!: Cage;
-  tiger!: Tiger;
-  bars!: Bars;
-  victoryText!: VictoryText;
+  public get cage() {
+    return this._cage;
+  }
+
+  public get tiger() {
+    return this._tiger;
+  }
+
+  public get bars() {
+    return this._bars;
+  }
+
+  public get victoryText() {
+    return this._victoryText;
+  }
 
   private setupChildObjects() {
     const barPairsAmount = config.barPairsAmount;
 
-    this.cage = new Cage(config.sprites.cage);
-    this.tiger = new Tiger(config.sprites.tiger);
-    this.victoryText = new VictoryText(config.sprites.victoryText);
-    this.bars = new Bars(config.bars, barPairsAmount, this.cage.cageSprite);
+    this._cage = new Cage(config.sprites.cage);
+    this._tiger = new Tiger(config.sprites.tiger);
+    this._victoryText = new VictoryText(config.sprites.victoryText);
+    this._bars = new Bars(config.bars, barPairsAmount, this._cage.cageSprite);
 
-    this.addChild(this.cage, this.tiger, this.bars, this.victoryText);
+    this.addChild(this._cage, this._tiger, this._bars, this._victoryText);
   }
 }
