@@ -1,31 +1,19 @@
 import { Container, Text } from "pixi.js";
 import { centerObjects } from "../utils/misc";
 import { SceneUtils } from "../core/App";
-import Background from "../prefabs/SpriteContainers/Background";
-import Panel from "../prefabs/SpriteContainers/Panel";
-import Tiger from "../prefabs/SpriteContainers/Tiger";
 import ProgressHandler from "./ProgressHandler";
-import { Bars } from "../prefabs/SpriteContainers/Bars";
-import Cage from "../prefabs/SpriteContainers/Cage";
-import VictoryText from "../prefabs/SpriteContainers/VictoryText";
 import { Cypher } from "../prefabs/Cypher";
-import RestartButton from "../prefabs/SpriteContainers/RestartButton";
-import ProgressBar from "../prefabs/SpriteContainers/ProgressBar";
 import config from "../config";
+import LeftContainer from "./Containers/LeftContainer";
+import CenterContainer from "./Containers/CenterContainer";
+import BackgroundContainer from "./Containers/BackgroundContainer";
 
 export default class Game extends Container {
   name = "Game";
 
-  private _background!: Background;
-
-  private _cage!: Cage;
-  private _tiger!: Tiger;
-  private _bars!: Bars;
-  private _victoryText!: VictoryText;
-
-  private _panel!: Panel;
-  private _restartButton!: RestartButton;
-  private _progressBar!: ProgressBar;
+  private _backgroundContainer!: BackgroundContainer;
+  private _centerContainer!: CenterContainer;
+  private _leftContainer!: LeftContainer;
 
   private _cypher!: Cypher;
   private _progressHandler!: ProgressHandler;
@@ -57,13 +45,13 @@ export default class Game extends Container {
     this.setupDependencies();
 
     // draw background
-    this.addChild(this._background);
+    this.addChild(this._backgroundContainer);
 
     // draw middle part
-    this.addChild(this._cage, this._tiger, this._bars, this._victoryText);
+    this.addChild(this._centerContainer);
 
     // draw left part
-    this.addChild(this._panel, this._restartButton, this._progressBar);
+    this.addChild(this._leftContainer);
   }
 
   /**
@@ -72,50 +60,29 @@ export default class Game extends Container {
    */
   update() {
     if (this._cypher.isComplete(this._progressHandler.progress)) {
-      this.victory();
     }
   }
 
   reset(): void {
-    this._victoryText.visible = false;
-    this._restartButton.visible = false;
-
     this._cypher.reset();
-    this._progressBar.reset();
 
     this._progressHandler.progress = 0;
     this._progressHandler.resetOpenedBars();
-    this._progressHandler.resetLock();
-  }
-
-  victory() {
-    this._victoryText.showText();
-    this._restartButton.showButton();
   }
 
   private setupDependencies(): void {
     const barPairsAmount = config.barPairsAmount;
 
-    this._background = new Background(config.sprites.background);
-
-    this._cage = new Cage(config.sprites.cage);
-    this._tiger = new Tiger(config.sprites.tiger);
-    this._victoryText = new VictoryText(config.sprites.victoryText);
-    const cage = this._cage.getChildAt(0);
-    this._bars = new Bars(config.bars, barPairsAmount, cage);
-
-    this._panel = new Panel(config.sprites.panel);
-    this._restartButton = new RestartButton(() => this.reset());
-    this._progressBar = new ProgressBar(config.progressBar);
+    this._backgroundContainer = new BackgroundContainer();
+    this._leftContainer = new LeftContainer();
+    this._centerContainer = new CenterContainer();
 
     this._cypher = new Cypher(barPairsAmount * 2);
     this._progressHandler = new ProgressHandler(
       this._cypher,
-      this._progressBar,
-      this._victoryText.getChildAt(0),
-      config.animatedBars,
-      barPairsAmount,
-      this._bars.barDtos
+      this._leftContainer.progressBar,
+      this._centerContainer,
+      barPairsAmount
     );
   }
 }

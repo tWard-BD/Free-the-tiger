@@ -11,14 +11,19 @@ export default class Tiger extends Container {
     this.renderSprite();
   }
 
+  tigerSprite!: Sprite;
+
   private renderSprite(): void {
     const tigerTexture = Texture.from(this._config.textureName);
 
-    const tigerSprite = new Sprite(tigerTexture);
-    tigerSprite.scale.set(this._config.scale);
-    tigerSprite.anchor.set(this._config.anchor);
-    tigerSprite.position.set(this._config.positionX, this._config.positionY);
+    this.tigerSprite = new Sprite(tigerTexture);
+    this.tigerSprite.scale.set(this._config.scale);
+    this.tigerSprite.anchor.set(this._config.anchor);
+    this.tigerSprite.position.set(
+      this._config.positionX,
+      this._config.positionY
+    );
 
-    this.addChild(tigerSprite);
+    this.addChild(this.tigerSprite);
   }
 }

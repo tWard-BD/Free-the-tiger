@@ -1,15 +1,14 @@
 import { Sprite } from "pixi.js";
 import { AnimatedBar } from "../prefabs/AnimatedBar";
 import { Cypher } from "../prefabs/Cypher";
-import { BarDto } from "../prefabs/SpriteContainers/Bars";
 import ProgressBar from "../prefabs/SpriteContainers/ProgressBar";
-import { AnimatedBarConfig } from "../utils/types/ConfigTypes";
+import CenterContainer from "./Containers/CenterContainer";
+import config from "../config";
 
 export default class ProgressHandler {
   private _cypher: Cypher;
   private _progressBar: ProgressBar;
-  private _victoryText: Sprite;
-  private _config: AnimatedBarConfig;
+  private _centerContainer: CenterContainer;
   private _bars: AnimatedBar[] = [];
 
   private _locked = false;
@@ -19,16 +18,14 @@ export default class ProgressHandler {
   constructor(
     cypher: Cypher,
     progressBar: ProgressBar,
-    victoryText: Sprite,
-    config: AnimatedBarConfig,
-    pairsOfBars: number,
-    bars: BarDto[]
+    centerContainer: CenterContainer,
+    pairsOfBars: number
   ) {
     this._cypher = cypher;
     this._progressBar = progressBar;
-    this._victoryText = victoryText;
-    this._config = config;
+    this._centerContainer = centerContainer;
 
+    let bars = this._centerContainer.bars.barDtos;
     const pairsAmount = pairsOfBars;
 
     for (let i = 0; i < pairsAmount; i++) {
@@ -40,7 +37,7 @@ export default class ProgressHandler {
         bar.shadowBar,
         bar.destinationPositionX,
         i + 1,
-        this._config,
+        config.animatedBars,
         (clicked) => this.handleClick(clicked)
       );
 
@@ -49,7 +46,7 @@ export default class ProgressHandler {
         barOposite.shadowBar,
         barOposite.destinationPositionX,
         pairsAmount + i + 1,
-        this._config,
+        config.animatedBars,
         (clicked) => this.handleClick(clicked)
       );
 
@@ -64,7 +61,8 @@ export default class ProgressHandler {
     }
 
     if (!this._cypher.tryAdvance(this.progress, bar.assignedNumber)) {
-      this.finish();
+      // add the regular reset logic here
+      this.restart();
       return;
     }
 
@@ -93,15 +91,13 @@ export default class ProgressHandler {
     }
   }
 
-  finish(): void {
+  restart(): void {
     this._cypher.reset();
     this.resetOpenedBars();
     this._progressBar.reset();
+    this._centerContainer.victoryText.visible = false;
 
     this.progress = 0;
-  }
-
-  resetLock(): void {
     this._locked = false;
   }
 }
