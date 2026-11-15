@@ -7,6 +7,7 @@ import config from "../config";
 import LeftContainer from "./Containers/LeftContainer";
 import CenterContainer from "./Containers/CenterContainer";
 import BackgroundContainer from "./Containers/BackgroundContainer";
+import WhiteText from "../utils/WhiteText";
 
 export default class Game extends Container {
   name = "Game";
@@ -24,11 +25,7 @@ export default class Game extends Container {
 
   async load() {
     // example use of Pixi Text
-    const text = new Text("Loading...", {
-      fontFamily: "Verdana",
-      fontSize: 50,
-      fill: "white",
-    });
+    const text = new Text("Loading...", WhiteText);
     text.resolution = 2;
 
     // example use of utils functions

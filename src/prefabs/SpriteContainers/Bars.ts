@@ -1,5 +1,6 @@
 import { Container, Sprite, Texture, Text } from "pixi.js";
 import { BarConfig } from "../../utils/types/ConfigTypes";
+import WhiteText from "../../utils/WhiteText";
 
 export type BarDto = {
   bar: Sprite;
@@ -32,19 +33,14 @@ export class Bars extends Container {
     for (let i = 0; i < barPairsAmount; i++) {
       const barSprite = new Sprite(barTexture);
       const barShadowSprite = new Sprite(barShadowTexture);
-      const barNumber = new Text(`${i + 1}`, {
-        fontFamily: "Verdana",
-        fontSize: 50,
-        fill: "white",
-      });
+      const barNumber = new Text(`${i + 1}`, WhiteText);
 
       const barSpriteOposite = new Sprite(barTexture);
       const barShadowSpriteOposite = new Sprite(barShadowTexture);
-      const barOppositeNumber = new Text(`${barPairsAmount + i + 1}`, {
-        fontFamily: "Verdana",
-        fontSize: 50,
-        fill: "white",
-      });
+      const barOppositeNumber = new Text(
+        `${barPairsAmount + i + 1}`,
+        WhiteText
+      );
 
       // a check only for the first iteration
       if (i <= 0) {
