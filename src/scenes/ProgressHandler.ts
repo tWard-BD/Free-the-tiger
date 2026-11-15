@@ -2,9 +2,9 @@ import { AnimatedBar } from "../prefabs/AnimatedBar";
 import { Cypher } from "../prefabs/Cypher";
 import ProgressBar from "../prefabs/SpriteContainers/ProgressBar";
 import CenterContainer from "./Containers/CenterContainer";
-import { Container, DisplayObject } from "pixi.js";
 import AnimatedTiger from "../prefabs/AnimatedTiger";
 import gsap from "gsap";
+import { swapContainerChildren } from "../utils/misc";
 
 export default class ProgressHandler {
   private _cypher: Cypher;
@@ -43,7 +43,6 @@ export default class ProgressHandler {
       }
 
       await this.simpleRestart();
-      console.log(bar.eventMode);
       return;
     }
 
@@ -75,7 +74,7 @@ export default class ProgressHandler {
   async finish(bar: AnimatedBar): Promise<void> {
     await bar.open();
 
-    this.swapContainerChildren(
+    swapContainerChildren(
       this._centerContainer,
       this._centerContainer.bars,
       this._centerContainer.tiger
@@ -101,7 +100,7 @@ export default class ProgressHandler {
   async fullRestart(): Promise<void> {
     await this._tiger.getBackInCage();
 
-    this.swapContainerChildren(
+    swapContainerChildren(
       this._centerContainer,
       this._centerContainer.tiger,
       this._centerContainer.bars
@@ -134,17 +133,5 @@ export default class ProgressHandler {
       this._bars.push(animatedBar);
       this._bars.push(animatedBarOposite);
     }
-  }
-
-  private swapContainerChildren(
-    container: Container,
-    firstChild: DisplayObject,
-    secondChild: DisplayObject
-  ): void {
-    let firstChildIndex = container.getChildIndex(firstChild);
-    let secondChildIndex = container.getChildIndex(secondChild);
-
-    container.children[firstChildIndex] = secondChild;
-    container.children[secondChildIndex] = firstChild;
   }
 }

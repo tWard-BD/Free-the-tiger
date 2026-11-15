@@ -14,8 +14,8 @@ export default class Background extends Container {
   private renderSprite(): void {
     const backgroundTexture = Texture.from(this._config.textureName);
 
-    const bacgroundSprite = new Sprite(backgroundTexture);
+    const backgroundSprite = new Sprite(backgroundTexture);
 
-    this.addChild(bacgroundSprite);
+    this.addChild(backgroundSprite);
   }
 }

@@ -28,7 +28,7 @@ export class Cypher {
       }
     }
 
-    console.log(this._order);
+    console.log(JSON.stringify(this._order));
   }
 
   tryAdvance(progress: number, assignedNumber: number): boolean {

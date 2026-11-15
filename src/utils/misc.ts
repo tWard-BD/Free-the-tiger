@@ -1,4 +1,4 @@
-import { DisplayObject, Sprite } from "pixi.js";
+import { Container, DisplayObject, Sprite } from "pixi.js";
 
 /**
  * center objects to the middle of the window
@@ -27,4 +27,16 @@ export async function after(
 
 export function getEntries<T extends object>(obj: T) {
   return Object.entries(obj) as Entries<T>;
+}
+
+export function swapContainerChildren(
+  container: Container,
+  firstChild: DisplayObject,
+  secondChild: DisplayObject
+): void {
+  let firstChildIndex = container.getChildIndex(firstChild);
+  let secondChildIndex = container.getChildIndex(secondChild);
+
+  container.children[firstChildIndex] = secondChild;
+  container.children[secondChildIndex] = firstChild;
 }
