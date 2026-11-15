@@ -5,6 +5,17 @@ export type WorldConfig = {
 
 export type AnimatedBarConfig = {
   animationDuration: number;
+  ease: string;
+  yoyo: boolean;
+  repeat: number;
+};
+
+export type AnimatedTigerConfig = {
+  positionX: number;
+  positionY: number;
+  width: number;
+  height: number;
+  duration: number;
 };
 
 export type BarConfig = {

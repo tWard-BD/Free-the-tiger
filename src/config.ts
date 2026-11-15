@@ -1,5 +1,6 @@
 import {
   AnimatedBarConfig,
+  AnimatedTigerConfig,
   BarConfig,
   ProgressBarConfig,
   SpriteConfig,
@@ -9,6 +10,7 @@ import {
 type Config = {
   worldConfig: WorldConfig;
   animatedBars: AnimatedBarConfig;
+  animatedTiger: AnimatedTigerConfig;
   bars: BarConfig;
   sprites: Record<string, SpriteConfig>;
   progressBar: ProgressBarConfig;
@@ -22,6 +24,16 @@ export default {
   },
   animatedBars: {
     animationDuration: 0.4,
+    ease: "elastic.out(1,0.3)",
+    yoyo: true,
+    repeat: 2,
+  },
+  animatedTiger: {
+    positionX: 690,
+    positionY: 335,
+    width: 800,
+    height: 600,
+    duration: 0.5,
   },
   bars: {
     textureName: "bar",
