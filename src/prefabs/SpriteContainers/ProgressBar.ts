@@ -13,15 +13,15 @@ export default class ProgressBar extends Container {
     this.renderGraphics();
   }
 
-  setProgress(ratio: number): void {
+  async setProgress(ratio: number): Promise<void> {
     gsap.to(this._fill.scale, {
       x: ratio,
       duration: this._config.animationDuration,
     });
   }
 
-  reset(): void {
-    gsap.to(this._fill.scale, {
+  async reset(): Promise<void> {
+    await gsap.to(this._fill.scale, {
       x: 0,
       duration: this._config.animationDuration,
     });

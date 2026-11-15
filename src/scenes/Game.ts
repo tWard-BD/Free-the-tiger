@@ -51,22 +51,6 @@ export default class Game extends Container {
     this.addChild(this._leftContainer);
   }
 
-  /**
-   * Called on every ticker update
-   * @param delta
-   */
-  update() {
-    if (this._cypher.isComplete(this._progressHandler.progress)) {
-    }
-  }
-
-  reset(): void {
-    this._cypher.reset();
-
-    this._progressHandler.progress = 0;
-    this._progressHandler.resetOpenedBars();
-  }
-
   private setupDependencies(): void {
     const barPairsAmount = config.barPairsAmount;
 
